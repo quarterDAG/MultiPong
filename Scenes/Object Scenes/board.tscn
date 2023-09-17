@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw3515pqsworj"]
+
+[ext_resource type="Texture2D" uid="uid://dkclcmqlr4egh" path="res://arts/Board.png" id="1_rb2hi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b67lr"]
+size = Vector2(801.333, 0.760426)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1a4f2"]
+size = Vector2(1.33494, 448.669)
+
+[node name="Board" type="Sprite2D"]
+rotation = 1.5708
+scale = Vector2(0.75, 1.315)
+texture = ExtResource("1_rb2hi")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 225)
+shape = SubResource("RectangleShape2D_b67lr")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.665, -225)
+shape = SubResource("RectangleShape2D_b67lr")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" groups=["Goal"]]
+position = Vector2(-400, 0)
+shape = SubResource("RectangleShape2D_1a4f2")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" groups=["Goal"]]
+position = Vector2(400, 0)
+shape = SubResource("RectangleShape2D_1a4f2")

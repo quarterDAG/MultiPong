@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://b65n5qm6jb8la"]
+
+[ext_resource type="PackedScene" uid="uid://dw3515pqsworj" path="res://Scenes/board.tscn" id="1_0j2xq"]
+[ext_resource type="Script" path="res://Scenes/Goal.gd" id="2_8cn5g"]
+[ext_resource type="PackedScene" uid="uid://bt7uq7k0q57ga" path="res://Scenes/player_1.tscn" id="2_dq7i8"]
+[ext_resource type="PackedScene" uid="uid://cs0625ns6f385" path="res://Scenes/player_2.tscn" id="3_r5yfn"]
+[ext_resource type="PackedScene" uid="uid://c6w1j3x75l4nh" path="res://Scenes/ScoreBoard.tscn" id="4_ky0ds"]
+[ext_resource type="PackedScene" uid="uid://crtsdovygsul1" path="res://Scenes/Ball.tscn" id="5_15t43"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iy61n"]
+size = Vector2(1.33494, 448.669)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Goal1" type="RigidBody2D" parent="." groups=["Goal2"]]
+position = Vector2(300, 346)
+rotation = 1.5708
+scale = Vector2(0.75, 1.315)
+freeze = true
+script = ExtResource("2_8cn5g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal1"]
+position = Vector2(400, 0)
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="Goal2" type="RigidBody2D" parent="." groups=["Goal2"]]
+position = Vector2(300, 346)
+rotation = 1.5708
+scale = Vector2(0.75, 1.315)
+freeze = true
+script = ExtResource("2_8cn5g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2"]
+position = Vector2(-400, 0)
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="Board" parent="." instance=ExtResource("1_0j2xq")]
+position = Vector2(300, 346)
+
+[node name="Player 1" parent="." instance=ExtResource("2_dq7i8")]
+position = Vector2(300, 637)
+
+[node name="Player 2" parent="." instance=ExtResource("3_r5yfn")]
+position = Vector2(300, 55)
+
+[node name="ScoreBoard" parent="." instance=ExtResource("4_ky0ds")]
+
+[node name="Ball" parent="." groups=["Ball"] instance=ExtResource("5_15t43")]
+position = Vector2(300, 347)
+
+[connection signal="body_entered" from="Goal1" to="ScoreBoard" method="_on_goal_2_body_entered"]
+[connection signal="body_entered" from="Goal2" to="ScoreBoard" method="_on_goal_2_body_entered"]

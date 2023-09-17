@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://b65n5qm6jb8la"]
+
+[ext_resource type="PackedScene" uid="uid://dw3515pqsworj" path="res://Scenes/board.tscn" id="1_0j2xq"]
+[ext_resource type="Script" path="res://Scenes/Goal.gd" id="2_8cn5g"]
+[ext_resource type="PackedScene" uid="uid://bt7uq7k0q57ga" path="res://Scenes/player_1.tscn" id="2_dq7i8"]
+[ext_resource type="PackedScene" uid="uid://cs0625ns6f385" path="res://Scenes/player_2.tscn" id="3_r5yfn"]
+[ext_resource type="PackedScene" uid="uid://c6w1j3x75l4nh" path="res://Scenes/ScoreBoard.tscn" id="4_ky0ds"]
+[ext_resource type="PackedScene" uid="uid://cm8cvpt0i1r01" path="res://Scenes/kinematic_ball.tscn" id="6_up0pq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iy61n"]
+size = Vector2(1.33494, 448.669)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Board" parent="." instance=ExtResource("1_0j2xq")]
+position = Vector2(300, 346)
+
+[node name="Goal1" type="Area2D" parent="Board"]
+position = Vector2(400, 0)
+disable_mode = 2
+script = ExtResource("2_8cn5g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Goal1" groups=["Goal"]]
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="Goal2" type="Area2D" parent="Board"]
+position = Vector2(-400, 0)
+disable_mode = 2
+script = ExtResource("2_8cn5g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Goal2" groups=["Goal"]]
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="Player 1" parent="." instance=ExtResource("2_dq7i8")]
+position = Vector2(300, 637)
+motion_mode = 1
+
+[node name="Player 2" parent="." instance=ExtResource("3_r5yfn")]
+position = Vector2(300, 55)
+motion_mode = 1
+
+[node name="ScoreBoard" parent="." node_paths=PackedStringArray("pause_timer") instance=ExtResource("4_ky0ds")]
+pause_timer = NodePath("../PauseTimer")
+
+[node name="PauseTimer" type="Timer" parent="."]
+process_mode = 3
+wait_time = 3.0
+one_shot = true
+
+[node name="KinematicBall" parent="." instance=ExtResource("6_up0pq")]
+position = Vector2(300, 347)
+
+[connection signal="body_entered" from="Board/Goal1" to="Board/Goal1" method="_on_body_entered"]
+[connection signal="body_entered" from="Board/Goal1" to="ScoreBoard" method="_on_goal_hit" binds= [1]]
+[connection signal="goal_hit" from="Board/Goal1" to="ScoreBoard" method="_on_goal_hit" binds= [2]]
+[connection signal="body_entered" from="Board/Goal2" to="Board/Goal2" method="_on_body_entered"]
+[connection signal="body_entered" from="Board/Goal2" to="ScoreBoard" method="_on_goal_hit" binds= [2]]
+[connection signal="goal_hit" from="Board/Goal2" to="ScoreBoard" method="_on_goal_hit" binds= [1]]
+[connection signal="timeout" from="PauseTimer" to="ScoreBoard" method="_on_pause_timer_timeout"]

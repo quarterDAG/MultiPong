@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfeqpolekjvxg"]
+
+[ext_resource type="Script" path="res://Scripts/auth.gd" id="2_5xlf7"]
+
+[node name="Login Menu" type="Node2D"]
+
+[node name="Email" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(400, 50)
+offset_left = 102.0
+offset_top = 186.0
+offset_right = 502.0
+offset_bottom = 236.0
+placeholder_text = "Username"
+
+[node name="Password" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(400, 50)
+offset_left = 102.0
+offset_top = 260.0
+offset_right = 502.0
+offset_bottom = 310.0
+placeholder_text = "Password"
+
+[node name="SignUp" type="Button" parent="."]
+offset_left = 102.0
+offset_top = 475.0
+offset_right = 162.0
+offset_bottom = 506.0
+text = "Sign Up"
+
+[node name="Login" type="Button" parent="."]
+offset_left = 439.0
+offset_top = 474.0
+offset_right = 499.0
+offset_bottom = 505.0
+text = "Login"
+
+[node name="LoginControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_5xlf7")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="LoginControl"]
+
+[node name="Error Label" type="Label" parent="."]
+offset_left = 106.0
+offset_top = 316.0
+offset_right = 500.0
+offset_bottom = 342.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
+
+[connection signal="pressed" from="SignUp" to="LoginControl" method="_on_sign_up_pressed"]
+[connection signal="pressed" from="Login" to="LoginControl" method="_on_login_pressed"]
+[connection signal="request_completed" from="LoginControl/HTTPRequest" to="LoginControl" method="_on_http_request_request_completed"]

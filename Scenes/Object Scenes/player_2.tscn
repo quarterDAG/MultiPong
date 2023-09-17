@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs0625ns6f385"]
+
+[ext_resource type="Texture2D" uid="uid://xglt4slmn2js" path="res://arts/Computer.png" id="1_burtj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5kct"]
+size = Vector2(120, 17)
+
+[node name="Player 1" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_burtj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_i5kct")

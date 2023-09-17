@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6w1j3x75l4nh"]
+
+[ext_resource type="Script" path="res://Scripts/ScoreBoard.gd" id="1_8aia6"]
+[ext_resource type="Texture2D" uid="uid://cwdee0ckip5aw" path="res://arts/ScoreBar.png" id="2_q65ch"]
+[ext_resource type="FontFile" uid="uid://d1w3ksalhsixw" path="res://fonts/Teko-VariableFont_wght.ttf" id="3_8oa8r"]
+
+[sub_resource type="Theme" id="Theme_2d3pg"]
+default_font = ExtResource("3_8oa8r")
+default_font_size = 30
+
+[node name="ScoreBoard" type="CanvasLayer"]
+script = ExtResource("1_8aia6")
+
+[node name="Player1 Score Frame" type="Sprite2D" parent="."]
+position = Vector2(119, 23)
+scale = Vector2(0.7, 1)
+texture = ExtResource("2_q65ch")
+
+[node name="Player2 Score Frame" type="Sprite2D" parent="."]
+position = Vector2(481, 23)
+rotation = 3.14159
+scale = Vector2(0.7, 1)
+texture = ExtResource("2_q65ch")
+
+[node name="Player1" type="Label" parent="."]
+offset_left = 13.0
+offset_top = -6.0
+offset_right = 87.0
+offset_bottom = 55.0
+theme = SubResource("Theme_2d3pg")
+text = "Player 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score 1" type="Label" parent="."]
+offset_left = 161.0
+offset_top = -4.0
+offset_right = 235.0
+offset_bottom = 57.0
+theme = SubResource("Theme_2d3pg")
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player2" type="Label" parent="."]
+offset_left = 396.0
+offset_top = -5.0
+offset_right = 470.0
+offset_bottom = 56.0
+theme = SubResource("Theme_2d3pg")
+text = "Player 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score 2" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 1.0
+offset_right = -10.0
+offset_bottom = 48.0
+grow_horizontal = 0
+theme = SubResource("Theme_2d3pg")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

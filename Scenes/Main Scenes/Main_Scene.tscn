@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://b65n5qm6jb8la"]
+
+[ext_resource type="Script" path="res://Scripts/Main_Scene.gd" id="1_byi3l"]
+[ext_resource type="PackedScene" uid="uid://dw3515pqsworj" path="res://Scenes/Object Scenes/board.tscn" id="2_iyu4d"]
+[ext_resource type="Script" path="res://Scripts/Goal.gd" id="3_oc7h6"]
+[ext_resource type="Script" path="res://Scripts/PauseTimer.gd" id="4_3ayrk"]
+[ext_resource type="FontFile" uid="uid://d1w3ksalhsixw" path="res://fonts/Teko-VariableFont_wght.ttf" id="5_ftl10"]
+[ext_resource type="PackedScene" uid="uid://b7b7tk1hwf7qq" path="res://Scenes/Object Scenes/player_1.tscn" id="6_q1ndh"]
+[ext_resource type="PackedScene" uid="uid://cs0625ns6f385" path="res://Scenes/Object Scenes/player_2.tscn" id="7_dv4xa"]
+[ext_resource type="PackedScene" uid="uid://c6w1j3x75l4nh" path="res://Scenes/Object Scenes/ScoreBoard.tscn" id="8_j8ets"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iy61n"]
+size = Vector2(1.33494, 448.669)
+
+[sub_resource type="Theme" id="Theme_ag855"]
+default_font = ExtResource("5_ftl10")
+default_font_size = 100
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("pause_timer")]
+script = ExtResource("1_byi3l")
+pause_timer = NodePath("Board/PauseTimer")
+
+[node name="Board" parent="." instance=ExtResource("2_iyu4d")]
+position = Vector2(299.999, 534.798)
+scale = Vector2(1.22082, 1.315)
+
+[node name="Goal1" type="Area2D" parent="Board"]
+position = Vector2(400, 0)
+disable_mode = 2
+script = ExtResource("3_oc7h6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Goal1" groups=["Goal"]]
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="Goal2" type="Area2D" parent="Board"]
+position = Vector2(-400, 0)
+disable_mode = 2
+script = ExtResource("3_oc7h6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Goal2" groups=["Goal"]]
+shape = SubResource("RectangleShape2D_iy61n")
+
+[node name="PauseTimer" type="Timer" parent="Board"]
+process_mode = 3
+wait_time = 4.0
+one_shot = true
+script = ExtResource("4_3ayrk")
+
+[node name="Label" type="Label" parent="Board/PauseTimer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ag855")
+text = "3
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player 1" parent="." instance=ExtResource("6_q1ndh")]
+position = Vector2(300, 1010)
+motion_mode = 1
+
+[node name="Player 2" parent="." instance=ExtResource("7_dv4xa")]
+position = Vector2(300, 57)
+motion_mode = 1
+
+[node name="ScoreBoard" parent="." node_paths=PackedStringArray("pause_timer") instance=ExtResource("8_j8ets")]
+pause_timer = NodePath("../Board/PauseTimer")
+
+[connection signal="body_entered" from="Board/Goal1" to="Board/Goal1" method="_on_body_entered"]
+[connection signal="body_entered" from="Board/Goal1" to="ScoreBoard" method="_on_goal_hit" binds= [1]]
+[connection signal="goal_hit" from="Board/Goal1" to="." method="_on_goal_hit"]
+[connection signal="goal_hit" from="Board/Goal1" to="ScoreBoard" method="_on_goal_hit" binds= [2]]
+[connection signal="body_entered" from="Board/Goal2" to="Board/Goal2" method="_on_body_entered"]
+[connection signal="body_entered" from="Board/Goal2" to="ScoreBoard" method="_on_goal_hit" binds= [2]]
+[connection signal="goal_hit" from="Board/Goal2" to="." method="_on_goal_hit"]
+[connection signal="goal_hit" from="Board/Goal2" to="ScoreBoard" method="_on_goal_hit" binds= [1]]
+[connection signal="timeout" from="Board/PauseTimer" to="." method="spawn_new_ball"]
+[connection signal="timeout" from="Board/PauseTimer" to="Board/PauseTimer" method="_on_PauseTimer_timeout"]
+[connection signal="timeout" from="Board/PauseTimer" to="ScoreBoard" method="_on_pause_timer_timeout"]

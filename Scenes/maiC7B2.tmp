@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://bw34yh0ivacco"]
+
+[ext_resource type="Script" path="res://Scenes/main_scene.gd" id="1_37b43"]
+[ext_resource type="PackedScene" uid="uid://bt7uq7k0q57ga" path="res://Scenes/player_1.tscn" id="1_hdcks"]
+[ext_resource type="PackedScene" uid="uid://dw3515pqsworj" path="res://Scenes/board.tscn" id="2_eda71"]
+[ext_resource type="PackedScene" uid="uid://cs0625ns6f385" path="res://Scenes/player_2.tscn" id="3_mmwqr"]
+[ext_resource type="PackedScene" uid="uid://crtsdovygsul1" path="res://Scenes/Ball.tscn" id="4_l5pmq"]
+[ext_resource type="PackedScene" uid="uid://c6w1j3x75l4nh" path="res://Scenes/ScoreBoard.tscn" id="5_iioqq"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_37b43")
+
+[node name="Player 1" parent="." instance=ExtResource("1_hdcks")]
+z_index = 5
+position = Vector2(300, 641)
+
+[node name="Player 2" parent="." instance=ExtResource("3_mmwqr")]
+z_index = 5
+position = Vector2(300, 59)
+
+[node name="Ball" parent="." instance=ExtResource("4_l5pmq")]
+z_index = 5
+position = Vector2(300, 350)
+
+[node name="Board" parent="." instance=ExtResource("2_eda71")]
+position = Vector2(300, 350)
+
+[node name="ScoreBoard" parent="." instance=ExtResource("5_iioqq")]
+
+[connection signal="goal_scored" from="Ball" to="ScoreBoard" method="_on_ball_goal_scored"]
