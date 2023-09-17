@@ -1,9 +1,44 @@
-[gd_scene format=3 uid="uid://c1hs71s6m0a6"]
+[gd_scene load_steps=5 format=3 uid="uid://cupihsk85b7ab"]
 
-[node name="MasterControlNode" type="Control"]
+[ext_resource type="Script" path="res://Scripts/Main Menu.gd" id="1_lgalf"]
+[ext_resource type="FontFile" uid="uid://d1w3ksalhsixw" path="res://fonts/Teko-VariableFont_wght.ttf" id="2_1kn6k"]
+[ext_resource type="PackedScene" uid="uid://cs0625ns6f385" path="res://Scenes/Object Scenes/player_2.tscn" id="2_deciy"]
+
+[sub_resource type="Theme" id="Theme_rsre5"]
+default_font = ExtResource("2_1kn6k")
+default_font_size = 50
+
+[node name="Main Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lgalf")
+player_scene = ExtResource("2_deciy")
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 193.0
+offset_right = 475.0
+offset_bottom = 273.0
+theme = SubResource("Theme_rsre5")
+text = "Host"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 332.0
+offset_right = 475.0
+offset_bottom = 412.0
+theme = SubResource("Theme_rsre5")
+text = "Join"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Object Scenes/player_2.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
